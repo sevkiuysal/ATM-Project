@@ -1,10 +1,14 @@
 package com.koylumuhendis.atmproject.dto;
 
+import com.koylumuhendis.atmproject.models.Role;
+
 public class LoginRequest {
 
 	private String username;
 	
 	private String password;
+	
+	private Role role;
 
 	public LoginRequest() {
 	}
@@ -17,10 +21,16 @@ public class LoginRequest {
 		return password;
 	}
 	
+	public Enum getRole() {
+		return role;
+	}
+	
 	public static class builder{
 		private String username;
 		
 		private String password;
+		
+		private Role role;
 		
 		public builder username(String username) {
 			this.username=username;
@@ -28,6 +38,11 @@ public class LoginRequest {
 		}
 		public builder password(String password) {
 			this.password=password;
+			return this;
+		}
+		
+		public builder role(Role role) {
+			this.role=role;
 			return this;
 		}
 		public LoginRequest build() {
@@ -38,5 +53,6 @@ public class LoginRequest {
 	public LoginRequest(builder builder) {
 		this.username=builder.username;
 		this.password=builder.password;
+		this.role=builder.role;
 	}
 } 
