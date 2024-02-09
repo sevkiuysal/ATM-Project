@@ -1,16 +1,15 @@
 package com.koylumuhendis.atmproject.service;
 
 import java.util.Optional;
-import java.util.concurrent.TimeUnit;
 
 import org.springframework.stereotype.Service;
 
-import com.koylumuhendis.atmproject.dto.CreateUserRequest;
 import com.koylumuhendis.atmproject.dto.ConvertClass;
+import com.koylumuhendis.atmproject.dto.CreateUserRequest;
 import com.koylumuhendis.atmproject.dto.UserDto;
 import com.koylumuhendis.atmproject.exception.InsufficientBalanceException;
 import com.koylumuhendis.atmproject.exception.UserNotFoundException;
-import com.koylumuhendis.atmproject.models.User;
+import com.koylumuhendis.atmproject.model.User;
 import com.koylumuhendis.atmproject.repository.UserRepository;
 
 @Service
@@ -26,7 +25,14 @@ public class UserService extends Thread {
 
 	public UserDto saveUser(CreateUserRequest request) {
 		
-		return convert(userRepository.save(convertUserDto.convert(request)));
+		return convert(
+				userRepository.save(
+						convertUserDto.convert(request)));
+	}
+	
+	public UserDto getUserByName(String name) {
+		
+		return userRepository.getUserByName(name);
 	}
 		
 	public UserDto addMoney(Long id,Double money) {
@@ -62,9 +68,11 @@ public class UserService extends Thread {
 		userRepository.updateBalanceById(id, balance);
 
 		money=recipient.getBalance()+money;
-		userRepository.updateBalanceByUserIban(userIban, money);
+		
+		addMoney(recipient.getId(), money);
 		
 		sender=findUserbyId(id);
+		
 		return Optional.of(sender);
 	}
 	
@@ -72,6 +80,9 @@ public class UserService extends Thread {
 		return convert(userRepository.findById(id).orElseThrow(()->new UserNotFoundException(id)));
 	}
 	
+	public UserDto login(String username,String password) {
+		return null;
+	}
 	private UserDto findUserbyIban(Long iban) {
 		return convert(userRepository.findByUserIban(iban).orElseThrow(()->new UserNotFoundException(iban)));
 	}
