@@ -1,13 +1,17 @@
 package com.koylumuhendis.atmproject.dto;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.stereotype.Component;
 
-import com.koylumuhendis.atmproject.models.User;
+import com.koylumuhendis.atmproject.model.Admin;
+import com.koylumuhendis.atmproject.model.User;
 
 @Component
 public class ConvertClass {
 	
-	public UserDto convert(User user) {
+	public UserDto UserToDto(User user) {
 		return new UserDto.builder()
 				.id(user.getId())
 				.username(user.getUsername())
@@ -18,13 +22,33 @@ public class ConvertClass {
 				.build();
 	}
 
-	public User convert(CreateUserRequest request) {
+	public User CreateToUser(CreateUserRequest request) {
 		return new User.builder()
 				.username(request.getUsername())
 				.password(request.getPassword())
-				.admin(request.getAdmin())
 				.balance(0.0)
 				.userIban(123456L)
 				.build();
+	}
+	
+	public Admin CreateToAdmin(CreateAdminRequest request) {
+		return new Admin.builder()
+				.username(request.getUsername())
+				.password(request.getPassword())
+				.build();
+	}
+	
+	public AdminDto AdminToDto(Admin admin) {
+		return new AdminDto.builder()
+				.id(admin.getId())
+				.username(admin.getUsername())
+				.password(admin.getPassword())
+				.build();
+	}
+	
+	public List<UserDto> ListUserToDto(List<User> users){
+		return users.stream()
+				.map(user-> UserToDto(user))
+				.collect(Collectors.toList());
 	}
 }
