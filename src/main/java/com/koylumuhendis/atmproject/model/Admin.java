@@ -1,22 +1,27 @@
 package com.koylumuhendis.atmproject.model;
 
+import java.util.List;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name="_admin")
 public class Admin extends BaseEntity {
-//	
-//	@OneToMany(mappedBy = "id")
-//	private List<User> users;
-//
-//	public List<User> getUsers() {
-//		return users;
-//	}
-//
-//	public void setUsers(List<User> users) {
-//		this.users = users;
-//	}
+	
+	@OneToMany(targetEntity = User.class, cascade = CascadeType.ALL)
+	private List<User> users;
+
+	public List<User> getUsers() {
+		return users;
+	}
+
+	public void setUsers(List<User> users) {
+		this.users = users;
+	}
 	public Admin() {
 		
 	}
