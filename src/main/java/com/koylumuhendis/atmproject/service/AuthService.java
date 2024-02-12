@@ -1,15 +1,20 @@
 package com.koylumuhendis.atmproject.service;
 
+
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
 
-import com.koylumuhendis.atmproject.dto.LoginRequest;
+
+
 import com.koylumuhendis.atmproject.dto.TokenResponseDto;
 import com.koylumuhendis.atmproject.model.Role;
+import com.koylumuhendis.atmproject.request.LoginRequest;
 import com.koylumuhendis.atmproject.utils.TokenGenerator;
 
+@Service
 public class AuthService {
 	
 	private final AuthenticationManager authenticationManager;
@@ -20,6 +25,8 @@ public class AuthService {
 	
 	private final TokenGenerator generator;
 
+	
+	
 	public AuthService(AuthenticationManager authenticationManager, AdminService adminService, UserService userService,
 			TokenGenerator generator) {
 		this.authenticationManager = authenticationManager;
@@ -27,8 +34,10 @@ public class AuthService {
 		this.userService = userService;
 		this.generator = generator;
 	}
-	
-	public TokenResponseDto loginUser(LoginRequest request) {
+
+
+
+	public TokenResponseDto login(LoginRequest request) {
 		try {
 		
 			Authentication authentication=authenticationManager
