@@ -26,6 +26,7 @@ public class ConvertClass {
 		return new User.builder()
 				.username(request.getUsername())
 				.password(request.getPassword())
+				.adminId(request.getAdminId())
 				.balance(0.0)
 				.userIban(123456L)
 				.build();

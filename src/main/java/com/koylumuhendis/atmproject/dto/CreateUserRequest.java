@@ -1,12 +1,12 @@
 package com.koylumuhendis.atmproject.dto;
 
-import com.koylumuhendis.atmproject.models.Admin;
+import com.koylumuhendis.atmproject.model.Admin;
 
 public class CreateUserRequest {
 
 	private String username;
 	private String password;
-	private Admin admin;
+	private Long adminId;
 	public CreateUserRequest() {
 	}
 	public String getUsername() {
@@ -17,14 +17,14 @@ public class CreateUserRequest {
 		return password;
 	}
 	
-	public Admin getAdmin() {
-		return admin;
+	public Long getAdminId() {
+		return adminId;
 	}
 	
 	public static class builder {
 		private String username;
 		private String password;
-		private Admin admin;
+		private Long adminId;
 		
 		public builder username(String username) {
 			this.username=username;
@@ -34,8 +34,8 @@ public class CreateUserRequest {
 			this.password=password;
 			return this;
 		}
-		public builder admin(Admin admin) {
-			this.admin=admin;
+		public builder adminId(Long adminId) {
+			this.adminId=adminId;
 			return this;
 		}
 		
@@ -44,7 +44,7 @@ public class CreateUserRequest {
 		}
 	}
 	public CreateUserRequest(builder builder) {
-		this.admin=builder.admin;
+		this.adminId=builder.adminId;
 		this.username=builder.username;
 		this.password=builder.password;
 	}
