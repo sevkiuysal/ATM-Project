@@ -16,3 +16,7 @@ logging:
     name: ./log/blog.log
   level:
     root: INFO
+jwt-variables: 
+  KEY: atmProject
+  ISSUER: koylumuhendis
+  EXPIRES_ACCESS_TOKEN_MINUTE: 15
