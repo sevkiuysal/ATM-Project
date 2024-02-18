@@ -27,7 +27,7 @@ public interface UserRepository extends JpaRepository<User,Long> {
 	
 	public Optional<User> findByUserIban(Long userIban);
 
-	public UserDto getUserByName(String name);
+	public User findUserByUsername(String name);
 	
 
 	
