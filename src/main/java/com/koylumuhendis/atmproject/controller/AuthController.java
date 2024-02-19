@@ -6,8 +6,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.koylumuhendis.atmproject.dto.LoginRequest;
+
 import com.koylumuhendis.atmproject.dto.TokenResponseDto;
+import com.koylumuhendis.atmproject.request.LoginRequest;
 import com.koylumuhendis.atmproject.service.AuthService;
 
 @RestController
