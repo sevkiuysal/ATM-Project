@@ -27,9 +27,9 @@ public class User extends BaseEntity{
 	
 	private Long userIban;
 	
-	@ManyToOne
-	@JoinColumn(name="admin_id")
-	private Admin admin;
+	private Long adminId;
+	
+
 
 	public User() {
 	}
@@ -50,9 +50,9 @@ public class User extends BaseEntity{
 	public Long getUserIban() {
 		return userIban;
 	}
-
-	public Admin getAdmin() {
-		return admin;
+	
+	public Long getAdminId() {
+		return adminId;
 	}
 
 public static class builder{
@@ -71,7 +71,7 @@ public static class builder{
 		
 		private Long userIban;
 		
-		private Admin admin;
+		private Long adminId;
 		
 		public builder id(Long id) {
 			this.id=id;
@@ -101,8 +101,8 @@ public static class builder{
 			this.userIban=userIban;
 			return this;
 		}
-		public builder admin(Admin admin) {
-			this.admin=admin;
+		public builder adminId(Long adminId) {
+			this.adminId=adminId;
 			return this;
 		}
 		
@@ -119,7 +119,7 @@ public static class builder{
 		this.updateTime=builder.updateTime;
 		this.balance=builder.balance;
 		this.userIban=builder.userIban;
-		this.admin=builder.admin;
+		this.adminId=builder.adminId;
 	}
 	
 }
