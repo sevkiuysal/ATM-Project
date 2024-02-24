@@ -22,6 +22,19 @@ public class UserDto {
 	}
 
 	
+	
+	public UserDto(Long id, String username, LocalDateTime createTime, LocalDateTime updateTime, Double balance,
+			Long userIban) {
+		this.id = id;
+		this.username = username;
+		this.createTime = createTime;
+		this.updateTime = updateTime;
+		this.balance = balance;
+		this.userIban = userIban;
+	}
+
+
+
 	public Long getId() {
 		return id;
 	}

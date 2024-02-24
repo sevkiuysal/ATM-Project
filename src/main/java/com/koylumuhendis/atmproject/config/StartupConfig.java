@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 import com.koylumuhendis.atmproject.dto.AdminDto;
 import com.koylumuhendis.atmproject.dto.CreateAdminRequest;
 import com.koylumuhendis.atmproject.dto.CreateUserRequest;
-import com.koylumuhendis.atmproject.models.Admin;
+import com.koylumuhendis.atmproject.model.Admin;
 import com.koylumuhendis.atmproject.service.AdminService;
 import com.koylumuhendis.atmproject.service.UserService;
 

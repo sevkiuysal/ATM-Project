@@ -16,23 +16,23 @@ import com.koylumuhendis.atmproject.repository.UserRepository;
 public class UserService extends Thread {
 	
 	private UserRepository userRepository;
-	private ConvertClass convertUserDto;
+	private ConvertClass convert;
 
-	public UserService(UserRepository userRepository,ConvertClass convertUserDto) {
+	public UserService(UserRepository userRepository,ConvertClass convert) {
 		this.userRepository = userRepository;
-		this.convertUserDto = convertUserDto;
+		this.convert = convert;
 	}
 
 	public UserDto saveUser(CreateUserRequest request) {
 		
-		return convert(
+		return convertDto(
 				userRepository.save(
-						convertUserDto.convert(request)));
+						convert.CreateToUser(request)));
 	}
 	
 	public UserDto getUserByName(String name) {
 		
-		return userRepository.getUserByName(name);
+		return convertDto(userRepository.findUserByUsername(name));
 	}
 		
 	public UserDto addMoney(Long id,Double money) {
@@ -77,17 +77,17 @@ public class UserService extends Thread {
 	}
 	
 	public UserDto findUserbyId(Long id) {
-		return convert(userRepository.findById(id).orElseThrow(()->new UserNotFoundException(id)));
+		return convertDto(userRepository.findById(id).orElseThrow(()->new UserNotFoundException(id)));
 	}
 	
 	public UserDto login(String username,String password) {
 		return null;
 	}
 	private UserDto findUserbyIban(Long iban) {
-		return convert(userRepository.findByUserIban(iban).orElseThrow(()->new UserNotFoundException(iban)));
+		return convertDto(userRepository.findByUserIban(iban).orElseThrow(()->new UserNotFoundException(iban)));
 	}
-	private UserDto convert(User user) {
-		return convertUserDto.convert(user);
+	private UserDto convertDto(User user) {
+		return convert.UserToDto(user);
 	}
 
 

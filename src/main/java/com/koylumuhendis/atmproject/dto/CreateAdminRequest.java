@@ -1,7 +1,7 @@
 package com.koylumuhendis.atmproject.dto;
 
 import com.koylumuhendis.atmproject.dto.CreateUserRequest.builder;
-import com.koylumuhendis.atmproject.models.Admin;
+import com.koylumuhendis.atmproject.model.Admin;
 
 public class CreateAdminRequest {
 
