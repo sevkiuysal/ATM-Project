@@ -1,11 +1,20 @@
 package com.koylumuhendis.atmproject.security;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.springframework.http.HttpHeaders;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.koylumuhendis.atmproject.dto.UserDto;
+import com.koylumuhendis.atmproject.service.UserService;
 import com.koylumuhendis.atmproject.utils.TokenGenerator;
 
 import jakarta.servlet.FilterChain;
@@ -18,9 +27,12 @@ public class JwtFilter extends OncePerRequestFilter {
 
 	private final TokenGenerator generator;
 	
+	private final UserService service;
 	
-	public JwtFilter(TokenGenerator generator) {
+	
+	public JwtFilter(TokenGenerator generator, UserService service) {
 		this.generator = generator;
+		this.service=service;
 	}
 
 
@@ -29,6 +41,25 @@ public class JwtFilter extends OncePerRequestFilter {
 			throws ServletException, IOException {
 		
 		String token=getToken(request);
+		String username;
+		try {
+			if(!token.isBlank()) {
+				username=generator.verifyJWT(token).getSubject();
+				UserDto userDetails=service.getUserByName(username); 
+				UsernamePasswordAuthenticationToken authenticationToken=
+						new UsernamePasswordAuthenticationToken(userDetails,null);
+				authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+				SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+			}
+			filterChain.doFilter(request, response);
+		} catch (Exception e) {
+			ObjectMapper mapper=new ObjectMapper();
+			response.setContentType("application/json");
+			Map<String ,String> errors=new HashMap();
+			errors.put("error", e.getMessage());
+			response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+			response.getWriter().write(mapper.writeValueAsString(errors));
+		}
 	}
 	
 	private String getToken(HttpServletRequest request) {
