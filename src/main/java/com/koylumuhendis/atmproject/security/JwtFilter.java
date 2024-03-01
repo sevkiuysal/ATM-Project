@@ -14,6 +14,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.koylumuhendis.atmproject.dto.UserDto;
+import com.koylumuhendis.atmproject.service.UserDetailServiceImpl;
 import com.koylumuhendis.atmproject.service.UserService;
 import com.koylumuhendis.atmproject.utils.TokenGenerator;
 
@@ -27,12 +28,12 @@ public class JwtFilter extends OncePerRequestFilter {
 
 	private final TokenGenerator generator;
 	
-	private final UserService service;
+	private final UserDetailServiceImpl detailServiceImpl;
 	
 	
-	public JwtFilter(TokenGenerator generator, UserService service) {
+	public JwtFilter(TokenGenerator generator, UserDetailServiceImpl detailServiceImpl) {
 		this.generator = generator;
-		this.service=service;
+		this.detailServiceImpl=detailServiceImpl;
 	}
 
 
@@ -45,7 +46,7 @@ public class JwtFilter extends OncePerRequestFilter {
 		try {
 			if(!token.isBlank()) {
 				username=generator.verifyJWT(token).getSubject();
-				UserDto userDetails=service.getUserByName(username); 
+				UserDetails userDetails=detailServiceImpl.loadUserByUsername(username);
 				UsernamePasswordAuthenticationToken authenticationToken=
 						new UsernamePasswordAuthenticationToken(userDetails,null);
 				authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
