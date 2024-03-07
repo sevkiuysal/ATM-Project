@@ -5,8 +5,10 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
+import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -50,5 +52,18 @@ public class SecurityConfig {
 	@Bean
 	public WebSecurityCustomizer webSecurityCustomizer() {
 		return web -> web.ignoring().requestMatchers("api/v1/auth/login");
+	}
+	
+	@Bean
+	public SecurityFilterChain securityFilterChain(HttpSecurity security) throws Exception {
+		return security
+				.csrf().disable()
+				.cors().and()
+				.authorizeRequests((auth)->{
+					auth.requestMatchers("api/v1/admin").hasAuthority("ADMIN");
+					auth.requestMatchers("api/v1/user").hasAnyAuthority("ADMIN","USER");
+					auth.anyRequest().authenticated();
+				}
+				).build();
 	}
 }
