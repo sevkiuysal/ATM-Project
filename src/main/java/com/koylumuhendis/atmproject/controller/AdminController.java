@@ -18,7 +18,7 @@ import com.koylumuhendis.atmproject.service.AdminService;
 
 	
 @RestController
-@RequestMapping(value = "/admin")
+@RequestMapping(value = "api/v1/admin")
 public class AdminController {
 	
 	private AdminService adminService;
