@@ -1,4 +1,4 @@
-FROM openjdk:8
+FROM openjdk:17
 EXPOSE 8080
-ADD target/ATM-Project.jar ATM-Project.jar
-ENTRYPOINT [ "java", "-jar", "/ATM-Project.jar"]
+ADD target/atm-project.jar atm-project.jar
+ENTRYPOINT [ "java", "-jar", "/atm-project.jar"]
