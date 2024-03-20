@@ -11,3 +11,41 @@ This project's aim is digital banking operations. This operations are user(sign 
 * Spring Boot DevTools
 * PostqreSQL Driver
 * Swagger UI
+* Docker
+
+# Dockerizing Project
+
+- Create Dockerfile and docker-compose.yaml
+
+- Maven clean and install
+
+ ```PowerShell
+ mvn clean install
+ ```
+- Build docker images from Dockerfile
+
+ ```PowerShell
+ docker build -t atm-project.jar .
+ ```
+ - Build docker-compose
+
+ ```PowerShell
+ docker-compose build
+ ```
+- Run docker-compose 
+
+ ```PowerShell
+ docker-compose up
+ ```
+
+- When we list the available docker images:
+
+ ```PowerShell
+ docker image ls -a
+ ```
+ 
+- When we list the all containers:
+
+ ```PowerShell
+ docker ps -a
+ ```
